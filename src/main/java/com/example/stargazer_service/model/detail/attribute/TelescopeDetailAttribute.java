@@ -21,7 +21,7 @@ public class TelescopeDetailAttribute {
     @Schema(description = "Описание характеристики детали", example = "Апертура телескопа — это диаметр его главного оптического элемента, который может быть линзой или зеркалом.")
     private String description;
 
-    public TelescopeDetailAttribute(Long id, String name, Long idTypeDetail, String description) {
+    public TelescopeDetailAttribute(Long id, String name, Long idTypeDetail, Long idBrandDetail, String description) {
         this.id = id;
         this.name = name;
         this.idTypeDetail = idTypeDetail;
@@ -30,6 +30,7 @@ public class TelescopeDetailAttribute {
 
     public TelescopeDetailAttribute() {
     }
+
 
     public Long getId() {
         return id;

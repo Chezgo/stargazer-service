@@ -6,6 +6,7 @@ import com.example.stargazer_service.exception.AlreadyExistsException;
 import com.example.stargazer_service.exception.NotFoundException;
 import com.example.stargazer_service.model.detail.TelescopeDetail;
 import com.example.stargazer_service.repository.detail.TelescopeDetailRepository;
+import com.example.stargazer_service.repository.detail.brand.TelescopeBrandDetailRepository;
 import com.example.stargazer_service.repository.detail.type.TelescopeTypeDetailRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,14 @@ import java.util.Optional;
 public class TelescopeDetailService {
     private final TelescopeDetailRepository telescopeDetailRepository;
     private final TelescopeTypeDetailRepository telescopeTypeDetailRepository;
+    private final TelescopeBrandDetailRepository telescopeBrandDetailRepository;
 
     public TelescopeDetailService(
             TelescopeDetailRepository telescopeDetailRepository,
-            TelescopeTypeDetailRepository typeDetailRepository) {
+            TelescopeTypeDetailRepository typeDetailRepository, TelescopeBrandDetailRepository telescopeBrandDetailRepository) {
         this.telescopeDetailRepository = telescopeDetailRepository;
         this.telescopeTypeDetailRepository = typeDetailRepository;
+        this.telescopeBrandDetailRepository = telescopeBrandDetailRepository;
     }
 
     /**
@@ -67,10 +70,14 @@ public class TelescopeDetailService {
         if (!telescopeTypeDetailRepository.existsById(request.idTypeDetail())) {
             throw new AlreadyExistsException("Тип детали с ID " + request.idTypeDetail() + " не существует");
         }
+        if (!telescopeBrandDetailRepository.existsById(request.idBrandDetail())) {
+            throw new AlreadyExistsException("Бренд детали с ID " + request.idBrandDetail() + " не существует");
+        }
 
         TelescopeDetail entity = new TelescopeDetail();
         entity.setName(request.name());
         entity.setIdTypeDetail(request.idTypeDetail());
+        entity.setIdBrandDetail(request.idBrandDetail());
         entity.setDescription(request.description());
 
         return telescopeDetailRepository.save(entity);
@@ -113,8 +120,12 @@ public class TelescopeDetailService {
         if (!telescopeTypeDetailRepository.existsById(request.idTypeDetail())) {
             throw new AlreadyExistsException("Тип детали с ID " + request.idTypeDetail() + " не существует");
         }
+        if (!telescopeBrandDetailRepository.existsById(request.idBrandDetail())) {
+            throw new AlreadyExistsException("Бренд детали с ID " + request.idBrandDetail() + " не существует");
+        }
 
         entity.setIdTypeDetail(request.idTypeDetail());
+        entity.setIdBrandDetail(request.idBrandDetail());
         entity.setName(request.name());
         entity.setDescription(request.description());
 
